@@ -10,19 +10,19 @@
   <body>
     <div class="container">
       <ul class="nav nav-tabs">
-        <li><%= link_to "Home", welcome_index_path %></li>
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Wikis", wikis_path %></li>
         <div class="pull-right user-info">
           <% if current_user %>
-            <!--Hello --> <%#= current_user.name || current_user.email %>
+            <%#= current_user.name || current_user.email %>
             <%#= link_to edit_user_registration_path, class: 'btn btn-primary btn-sm' do %>
             <%= link_to current_user.name || current_user.email, edit_user_registration_path %>
-              <!--<span class="glyphicon glyphicon-user"></span> -->
             <%# end %>
             <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-sm' do %>
               <span class="glyphicon glyphicon-log-out"></span>
             <% end %>
           <%# else %>
-            <%#= link_to "Sign In", new_user_session_path %> <!--or -->
+            <%#= link_to "Sign In", new_user_session_path %>
             <%#= link_to "Sign Up", new_user_registration_path %>
           <% end %>
         </div>
