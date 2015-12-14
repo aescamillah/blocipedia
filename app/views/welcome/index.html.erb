@@ -6,6 +6,8 @@
     <% if user_signed_in? == false %>
       <%= link_to "Sign In", new_user_session_path, class: 'btn btn-primary' %> or
       <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-primary' %>
+    <% elsif user_signed_in? && current_user.present? && current_user.standard?%>
+      <%= link_to "Upgrade to Premium", charges_new_path, class: 'btn btn-primary' %>
     <% end %>
   </p>
 </div>

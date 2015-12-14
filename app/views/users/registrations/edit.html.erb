@@ -38,7 +38,12 @@
     <% if current_user.present? && current_user.standard? %>
       <h3>Upgrade to Premium</h3>
       <div class="form-group">
-          <p><%= button_to "Upgrade", charges_new_path, method: :get, class: 'btn btn-primary' %></p>
+          <p><%= button_to "Upgrade", charges_new_path, method: :get, class: 'btn btn-primary'%></p>
+      </div>
+    <% elsif current_user.present? && current_user.premium? %>
+      <h3>Downgrade to Standard</h3>
+      <div class="form-group">
+          <p><%= button_to "Downgrade", downgrade_path, data: { confirm: "Are you sure you want to downgrade to a Standard Account?" }, method: :get, class: 'btn btn-warning', method: :post%></p>
       </div>
     <% end %>
 

@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
     role == 'premium'
   end
 
+  def standard?
+    role == 'standard'
+  end
+
+  def upgrade
+    self.role = 'premium'
+  end
+
 end
