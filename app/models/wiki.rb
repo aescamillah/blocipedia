@@ -6,4 +6,16 @@ class Wiki < ActiveRecord::Base
     self.private  ||= false
   end
 
+  scope :visible_to, -> (user) {
+    if user.present?
+      where('user_id=? OR private=?', user.id, false)
+    else
+      where(private: false)
+    end
+  }
+
+  scope :private_only, -> (user) {
+    where(private: true, user_id: user.id)
+  }
+
 end

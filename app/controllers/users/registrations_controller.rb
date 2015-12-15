@@ -20,7 +20,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def downgrade
     @user = current_user
     @user.update_attribute(:role, 'standard')
-    flash[:notice] = "Your account has been downgraded to Standard #{current_user.name || current_user.email}"
+    @wikis = @user.wikis.private_only(@user)
+    @wikis.each do |wiki|
+      wiki.update_attribute(:private, false)
+    end
+    flash[:notice] = "#{current_user.name || current_user.email}, your account has been downgraded to Standard"
     redirect_to root_path
   end
 
