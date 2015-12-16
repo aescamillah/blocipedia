@@ -9,7 +9,6 @@ class ChargesController < ApplicationController
   end
 
   def create
-
     # Creates a Stripe Customer object, for associating
     # with the charge
     customer = Stripe::Customer.create(
@@ -33,8 +32,6 @@ class ChargesController < ApplicationController
     rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to new_charge_path
-
   end
-
 
 end

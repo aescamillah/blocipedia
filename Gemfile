@@ -23,7 +23,9 @@ gem 'pundit'
 
 gem 'faker'
 
- gem 'stripe'
+gem 'stripe'
+
+gem 'redcarpet'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

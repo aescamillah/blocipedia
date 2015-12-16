@@ -23,13 +23,11 @@ class ApplicationPolicy
   end
 
   def update?
-
     if record.private
       user.present? && (record.user == user || user.admin?)
     else
       user.present?
     end
-
   end
 
   def edit?
