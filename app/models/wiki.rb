@@ -1,4 +1,5 @@
 class Wiki < ActiveRecord::Base
+  belongs_to :user
   has_many :users, through: :collaborators
   has_many :collaborators
   after_initialize :init
@@ -10,7 +11,7 @@ class Wiki < ActiveRecord::Base
   scope :visible_to, -> (user) {
     if user.present?
       where('user_id=? OR private=?', user.id, false)
-      where('user_id=? OR private=? OR', user.id, false)
+      # where('user_id=? OR private=? OR', user.id, false)
     else
       where(private: false)
     end
