@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :wikis, dependent: :destroy
+  has_many :wikis, dependent: :destroy, through: :collaborators
+  has_many :collaborators
   after_initialize :init
 
   def init

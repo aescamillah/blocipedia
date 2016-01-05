@@ -1,7 +1,8 @@
 class WikisController < ApplicationController
 
   def index
-    @wikis = Wiki.visible_to(current_user)
+    # @wikis = Wiki.visible_to(current_user)
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -15,7 +16,7 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new(params.require(:wiki).permit(:title, :body, :private))
+    @wiki = Wiki.new(params.require(:wiki).permit(:title, :body, :private, :user))
     if @wiki.save
       flash[:notice] = "Wiki was saved."
       redirect_to @wiki
