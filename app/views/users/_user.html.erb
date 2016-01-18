@@ -1,0 +1,6 @@
+<tr id='user-<%= user.id %>'>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+  <td><%= link_to "Add Collaborator", {:controller => "collaborators", :action => "create", :user_id => user.id }, method: :post, class: 'btn btn-primary'%></td>
+
+</tr>

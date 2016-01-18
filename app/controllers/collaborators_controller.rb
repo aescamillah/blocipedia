@@ -1,28 +1,29 @@
-class WikisController < ApplicationController
+class CollaboratorsController < ApplicationController
 
   def index
-    # @wikis = Wiki.visible_to(current_user)
-    @wikis = policy_scope(Wiki)
+    @users = User.all
+    @wiki = Wiki.find(params[:wiki_id])
+    # @collaborators = Collaborator.belonging_to(Wiki.find(params[:wiki_id]))
+    @collaborators = @wiki.users
   end
 
   def show
-    @wiki = Wiki.find(params[:id])
-    authorize @wiki
   end
 
   def new
-    @wiki = Wiki.new
-    authorize @wiki
+    @wiki = Wiki.find(params[:wiki_id])
+    @collaborator = Collaborator.new
+    @users = User.not_owner(@wiki)
   end
 
   def create
-    @wiki = current_user.wikis.build(wiki_params)
-    @wiki.owner = current_user
-    authorize @wiki
-    # @wiki = Wiki.new(params.require(:wiki).permit(:title, :body, :private, :user))
-    if @wiki.save
-      flash[:notice] = "Wiki was saved."
-      redirect_to @wiki
+    @wiki = Wiki.find(params[:wiki_id])
+    @user = User.find(params[:user_id])
+    # authorize @wiki
+    @collaborator = Collaborator.new(params.permit(:user_id, :wiki_id))
+    if @collaborator.save
+      flash[:notice] = "Collaborator was saved."
+      redirect_to wiki_collaborators_path(@wiki)
     else
       flash[:error] = "There was an error saving the wiki. Please try again."
       render :new
@@ -54,12 +55,6 @@ class WikisController < ApplicationController
       flash[:error] = "There was an error deleting the wiki."
       render :show
     end
-  end
-
-  private
-
-  def wiki_params
-    params.require(:wiki).permit(:title, :body, :private, :owner_id)
   end
 
 end

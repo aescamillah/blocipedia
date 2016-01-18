@@ -7,6 +7,5 @@ class CreateCollaborators < ActiveRecord::Migration
     end
 
     add_index :collaborators, :id, unique: true
-
   end
 end

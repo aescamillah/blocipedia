@@ -1,0 +1,15 @@
+<h2><p class="text-center">Add a Collaborator</p></h2>
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Give Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'users/user', collection: @users %>
+    </tbody>
+  </table>
+</div>

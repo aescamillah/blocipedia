@@ -24,7 +24,7 @@ class ApplicationPolicy
 
   def update?
     if record.private
-      user.present? && (record.user == user || user.admin?)
+      user.present? && (record.owner == user || user.admin?)
     else
       user.present?
     end
@@ -35,7 +35,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    user.present? && (record.user == user || user.admin?)
+    user.present? && (record.owner == user || user.admin?)
   end
 
   def scope

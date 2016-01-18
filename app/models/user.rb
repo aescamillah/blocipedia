@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :wikis, through: :collaborators
   has_many :collaborators
+  has_many :owned_wikis, :class_name => "Wiki", :foreign_key => :owner_id
   after_initialize :init
 
   def init
@@ -25,5 +26,13 @@ class User < ActiveRecord::Base
   def upgrade
     self.role = 'premium'
   end
+
+  scope :not_owner, -> (wiki) {
+    where.not(id: wiki.owner_id)
+  }
+
+  scope :not_collaborators, -> (wiki) {
+    where.not()
+  }
 
 end

@@ -1,0 +1,6 @@
+<h1><%= markdown_to_html @wiki.title %></h1>
+<p><%= markdown_to_html @wiki.body %></p>
+<% if user_signed_in?%>
+  <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+  <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this wiki?' } %>
+<% end %>
