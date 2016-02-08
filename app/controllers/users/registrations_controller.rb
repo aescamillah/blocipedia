@@ -20,9 +20,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def downgrade
     @user = current_user
     @user.update_attribute(:role, 'standard')
-    @wikis = @user.wikis.private_only(@user)
+    @wikis = Wiki.owned_by(@user)
     @wikis.each do |wiki|
       wiki.update_attribute(:private, false)
+      wiki.users.each do |user|
+        Collaborator.find_by(user_id: user.id, wiki_id: wiki.id).destroy
+      end
     end
     flash[:notice] = "#{current_user.name || current_user.email}, your account has been downgraded to Standard"
     redirect_to root_path

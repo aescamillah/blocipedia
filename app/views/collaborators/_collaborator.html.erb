@@ -1,4 +1,5 @@
-<tr id='collaborator-<%= collaborator.id %>'>
+<tr id='collaborator-<%= Collaborator.find_by(user_id: collaborator.id, wiki_id: @wiki.id).id %>'>
   <td><%= collaborator.name %></td>
   <td><%= collaborator.email %></td>
+  <td><%= link_to "", wiki_collaborator_path(@wiki, Collaborator.find_by(user_id: collaborator.id, wiki_id: @wiki.id)), method: :delete, class: 'glyphicon glyphicon-trash', remote: true %></td>
 </tr>

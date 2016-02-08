@@ -38,6 +38,11 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Wiki was updated."
+      if @wiki.private? == false
+        @wiki.users.each do |user|
+          Collaborator.find_by(user_id: user.id, wiki_id: @wiki.id).destroy
+        end
+      end
       redirect_to @wiki
     else
       flash[:error] = "There was an error saving the wiki. Please try again."
@@ -47,6 +52,7 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
       redirect_to wikis_path

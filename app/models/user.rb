@@ -31,8 +31,10 @@ class User < ActiveRecord::Base
     where.not(id: wiki.owner_id)
   }
 
-  scope :not_collaborators, -> (wiki) {
-    where.not()
+  scope :not_collaborators_or_owner, -> (wiki) {
+    array = wiki.users.map(&:id)
+    array << wiki.owner_id
+    where("id not in (?)", array)
   }
 
 end

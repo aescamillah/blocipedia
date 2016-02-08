@@ -2,7 +2,7 @@ class WikiPolicy < ApplicationPolicy
 
   def show?
     if record.private?
-      user.present? && record.owner_id == user.id
+      user.present? && (record.owner_id == user.id || record.users.include?(user))
     else
       user.present?
     end
@@ -10,6 +10,10 @@ class WikiPolicy < ApplicationPolicy
 
   def edit?
     show?
+  end
+
+  def destroy?
+    user.present? && (record.owner == user || user.admin?)
   end
 
   class Scope
@@ -29,7 +33,7 @@ class WikiPolicy < ApplicationPolicy
           all_wikis = scope.all
           all_wikis.each do |wiki|
             # if wiki.private == false || wiki.user == user || wiki.users.include?(user)
-            if wiki.private == false || wiki.owner_id == user.id || wiki.collaborators.include?(user)
+            if wiki.private == false || wiki.owner_id == user.id || wiki.users.include?(user)
               wikis << wiki
             end
           end

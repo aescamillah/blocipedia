@@ -22,4 +22,8 @@ class Wiki < ActiveRecord::Base
     where(private: true, owner_id: user.id)
   }
 
+  scope :owned_by, -> (user) {
+    where(owner_id: user.id)
+  }
+
 end

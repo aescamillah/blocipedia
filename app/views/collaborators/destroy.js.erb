@@ -1,0 +1,5 @@
+<% if @collaborator.destroyed? %>
+  $('#collaborator-' +<%= @collaborator.id %>).fadeOut(1000);
+<% else %>
+  $('#collaborator-' +<%= @collaborator.id %>).prepend("<div class='alert alert-danger'><%= flash[:error] %></div>");
+<% end %>

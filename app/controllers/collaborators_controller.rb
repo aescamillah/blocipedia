@@ -8,12 +8,13 @@ class CollaboratorsController < ApplicationController
   end
 
   def show
+
   end
 
   def new
     @wiki = Wiki.find(params[:wiki_id])
     @collaborator = Collaborator.new
-    @users = User.not_owner(@wiki)
+    @users = User.not_collaborators_or_owner(@wiki)
   end
 
   def create
@@ -31,30 +32,26 @@ class CollaboratorsController < ApplicationController
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])
-    authorize @wiki
   end
 
   def update
-    @wiki = Wiki.find(params[:id])
-    if @wiki.update_attributes(wiki_params)
-      flash[:notice] = "Wiki was updated."
-      redirect_to @wiki
-    else
-      flash[:error] = "There was an error saving the wiki. Please try again."
-      render :edit
-    end
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
-    if @wiki.destroy
-      flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
-      redirect_to wikis_path
+    @collaborator = Collaborator.find(params[:id])
+    if @collaborator.destroy
+      flash[:notice] = "Deleted successfully."
+      # redirect_to wikis_path
     else
       flash[:error] = "There was an error deleting the wiki."
-      render :show
+      # render :show
     end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
 end
